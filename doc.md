@@ -248,7 +248,7 @@ Note: 下面这段被注释掉的是不靠谱的官网步骤，请直接跳过�
 // ```
 
 下面的教程才是靠谱教程：
-Note：下面需要手动创建maven项目。
+Note：下面需要手动创建maven项目，代码可在https://github.com/dragondriver/transfer-station-of-work 找到。
 
 pom.xml
 ```xml
@@ -321,4 +321,91 @@ pom.xml
     </build>
 
 </project>
+```
+
+目录结构如下：
+```
+├── jts-example.csv
+├── pom.xml
+└── src
+    └── main
+        ├── java
+        └── scala
+            └── GeomesaDemo.scala
+```
+
+GeomesaDemo.scala代码，注意代码中CSV路径根据具体情况替换。
+```scala
+import org.apache.spark.sql.types._
+import org.locationtech.geomesa.spark.jts._
+import org.apache.spark.sql.types.StructType
+import org.apache.spark.sql._
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types._
+
+object GeomesaDemo {
+  def main(args: Array[String]) {
+    val spark = SparkSession.builder()
+                  .appName("geomesa-demo")
+                  .getOrCreate()
+                  .withJTS
+
+    val schema = StructType(Array(
+      StructField("name",StringType, nullable=false),
+      StructField("pointText", StringType, nullable=false),
+      StructField("polygonText", StringType, nullable=false),
+      StructField("latitude", DoubleType, nullable=false),
+      StructField("longitude", DoubleType, nullable=false)))
+
+    // val dataFile = this.getClass.getClassLoader.getResource("jts-example.csv").getPath
+    val dataFile = "file:///home/zilliz/geomesa-demo-mvn/jts-example.csv"
+    val df = spark.read
+      .schema(schema)
+      .option("sep", "-")
+      .option("timestampFormat", "yyyy/MM/dd HH:mm:ss ZZ")
+      .csv(dataFile)
+    df.show()
+
+    val alteredDF = df
+      .withColumn("polygon", st_polygonFromText(col("polygonText")))
+      .withColumn("point", st_makePoint(col("latitude"), col("longitude")))
+    alteredDF.show()
+  }
+}
+```
+
+编译
+```shell
+mvn clean scala:compile compile package
+```
+
+修改spark-default.conf，添加如下两行：
+```
+spark.driver.extraClassPath /home/zilliz/.m2/repository/org/locationtech/geomesa/geomesa-spark-jts_2.11/2.1.1/geomesa-spark-jts_2.11-2.1.1.jar:/home/zilliz/.m2/repository/com/vividsolutions/jts-core/1.14.0/jts-core-1.14.0.jar:/home/zilliz/.m2/repository/com/vividsolutions/jts-io/1.14.0/jts-io-1.14.0.jar:/home/zilliz/.m2/repository/org/locationtech/spatial4j/spatial4j/0.7/spatial4j-0.7.jar
+spark.executor.extraClassPath /home/zilliz/.m2/repository/org/locationtech/geomesa/geomesa-spark-jts_2.11/2.1.1/geomesa-spark-jts_2.11-2.1.1.jar:/home/zilliz/.m2/repository/com/vividsolutions/jts-core/1.14.0/jts-core-1.14.0.jar:/home/zilliz/.m2/repository/com/vividsolutions/jts-io/1.14.0/jts-io-1.14.0.jar:/home/zilliz/.m2/repository/org/locationtech/spatial4j/spatial4j/0.7/spatial4j-0.7.jar
+```
+
+运行spark任务
+```shell
+spark-submit --master yarn --class GeomesaDemo /home/zilliz/geomesa-demo-mvn/target/geomesa-spark-test-1.0-SNAPSHOT.jar
+```
+
+如果一切成功，有如下输出：
+```
++-----+-------------+--------------------+--------+---------+
+| name|    pointText|         polygonText|latitude|longitude|
++-----+-------------+--------------------+--------+---------+
+|itemA|Point (40 40)|Polygon ((35 35, ...|    40.0|     40.0|
+|itemB|Point (30 30)|Polygon ((25 25, ...|    30.0|     30.0|
+|itemC|Point (20 20)|Polygon ((15 15, ...|    20.0|     20.0|
++-----+-------------+--------------------+--------+---------+
+
++-----+-------------+--------------------+--------+---------+--------------------+-------------+
+| name|    pointText|         polygonText|latitude|longitude|             polygon|        point|
++-----+-------------+--------------------+--------+---------+--------------------+-------------+
+|itemA|Point (40 40)|Polygon ((35 35, ...|    40.0|     40.0|POLYGON ((35 35, ...|POINT (40 40)|
+|itemB|Point (30 30)|Polygon ((25 25, ...|    30.0|     30.0|POLYGON ((25 25, ...|POINT (30 30)|
+|itemC|Point (20 20)|Polygon ((15 15, ...|    20.0|     20.0|POLYGON ((15 15, ...|POINT (20 20)|
++-----+-------------+--------------------+--------+---------+--------------------+-------------+
 ```
