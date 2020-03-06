@@ -111,3 +111,214 @@ export YARN_CONF_DIR=$HADOOP_PREFIX/etc/hadoop
 
 提交任务（官网例子）
 ./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --driver-memory 4g --deploy-mode cluster --executor-memory 2g --executor-cores 1  examples/jars/spark-examples_2.12-3.0.0-preview2.jar 10
+
+
+zookeeper
+参考链接：https://zookeeper.apache.org/doc/current/zookeeperStarted.html
+
+下载
+wget https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/stable/apache-zookeeper-3.5.7-bin.tar.gz
+
+解压
+tar xvf apache-zookeeper-3.5.7-bin.tar.gz
+
+启动服务
+cd apache-zookeeper-3.5.7-bin/conf
+vim zoo.cfg     # 增加如下配置
+```
+tickTime=2000
+dataDir=/var/lib/zookeeper  # 换成有权限的地方
+clientPort=2181
+```
+cd ../bin
+./bin/zkServer.sh start
+
+
+accumulo
+参考链接：https://accumulo.apache.org/quickstart-1.x/
+
+下载
+wget http://mirror.bit.edu.cn/apache/accumulo/1.9.3/accumulo-1.9.3-bin.tar.gz
+
+解压
+tar xvf accumulo-1.9.3-bin.tar.gz
+
+编译
+./bin/build_native_library.sh
+
+配置
+./bin/bootstrap_config.sh
+（选择是321）
+
+修改conf/accumulo-site.xml
+instance.volumes改为hdfs://localhost:9000/tmp/accumulo
+
+修改conf/accumulo-env.sh
+export ZOOKEEPER_HOME=/home/zilliz/apache-zookeeper-3.5.7-bin/lib
+export HADOOP_PREFIX=/home/zilliz/hadoop-2.7.7
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/zilliz/accumulo-1.9.3/lib/native
+
+初始化
+./bin/accumulo init
+instance: zilliz
+password: zilliz
+
+启动服务
+./bin/start-all.sh
+
+创建用户zilliz
+./bin/accumulo shell -u root
+>> createuser zilliz
+>> exit
+
+Note: 下面这段被注释掉的是不靠谱的官网步骤，请直接跳过。
+// geomesa
+// 参考链接：
+// https://www.geomesa.org/documentation/tutorials/geomesa-examples-gdelt.html
+// https://www.geomesa.org/documentation/tutorials/spark.html
+// https://www.geomesa.org/documentation/user/accumulo/install.html#setting-up-accumulo-commandline
+// 
+// 下载
+// wget https://github.com/locationtech/geomesa/releases/download/geomesa_2.11-2.4.0/geomesa-accumulo_2.11-2.4.0-bin.tar.gz
+// 
+// 解压
+// tar xvf geomesa-accumulo_2.11-2.4.0-bin
+// 
+// 拷贝jar包
+// cp geomesa-accumulo_2.11-2.4.0/dist/accumulo/geomesa-accumulo-distributed-runtime_2.11-2.4.0.jar accumulo-1.9.3/lib/ext/
+// 
+// 创建namespace
+// ./bin/setup-namespace.sh -u root -n zilliz
+// 
+// 配置环境变量
+// ./bin/geomesa-accumulo configure
+// 根据提示输入即可，注意，按照提示说的更新.bashrc
+// 
+// ```这里不需要了
+// 安装对应jar包
+// vim bin/install-hadoop-accumulo.sh
+// 修改对应依赖的版本，分别是：
+// accumulo_version="1.9.3"
+// hadoop_version="2.7.7"
+// zookeeper_version="3.5.7"
+// 
+// ./bin/install-hadoop-accumulo.sh
+// ```
+// 
+// 安装其他依赖
+// ./bin/install-jai.sh
+// ./bin/install-jline.sh
+// 
+// 下载测试数据
+// ./bin/download-data.sh
+// 输入想下载数据的日期
+// 
+// 插入accumulo数据库
+// geomesa-accumulo ingest -u USERNAME -c CATALOGNAME -s gdelt -C gdelt gdelt_data.csv
+// 这里USERNAME为`root`（之前是zilliz），CATALOGNAME为表名，将在后面的测试代码里面用到，csv文件为上述下载的
+// 
+// 测试
+// git clone https://github.com/geomesa/geomesa-tutorials.git
+// cd geomesa-tutorials/geomesa-examples-spark
+// 
+// 修改CountByDay.scala里面的代码，
+// instanceId->zilliz
+// zookeepes->localhost
+// user->root
+// password->zilliz
+// tableName->zilliz.gdelt（上述提到的）
+// 
+// 编译
+// mvn clean install
+// 
+// 运行
+// /home/zilliz/hadoop_spark3_p2/bin/spark-submit --master yarn --class com.example.geomesa.spark.CountByDay target/geomesa-examples-spark-2.5.0-SNAPSHOT.jar --jars file://path/to/geomesa-accumulo-spark-runtime_2.11-$VERSION.jar
+// 
+// --jars的选项可以改为修改spark的配置文件，在spark-default.conf里添加以下两行：
+// ```
+// spark.driver.extraClassPath /home/zilliz/geomesa-accumulo_2.11-2.4.0/lib/geomesa-accumulo-spark_2.11-2.4.0.jar:/home/zilliz/geomesa-accumulo_2.11-2.4.0/lib/geomesa-index-api_2.11-2.4.0.jar
+// spark.executor.extraClassPath /home/zilliz/geomesa-accumulo_2.11-2.4.0/lib/geomesa-accumulo-spark_2.11-2.4.0.jar:/home/zilliz/geomesa-accumulo_2.11-2.4.0/lib/geomesa-index-api_2.11-2.4.0.jar
+// ```
+// 
+// 另外，如果在分布式环境下，需要额外添加如下两行：
+// ```
+// spark.serializer        org.apache.spark.serializer.KryoSerializer
+// spark.kryo.registrator  org.locationtech.geomesa.spark.GeoMesaSparkKryoRegistrator
+// ```
+
+下面的教程才是靠谱教程：
+Note：下面需要手动创建maven项目。
+
+pom.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>geomesa-spark-test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+	    <!-- https://mvnrepository.com/artifact/org.scala-lang/scala-library -->
+	    <dependency>
+		    <groupId>org.scala-lang</groupId>
+		    <artifactId>scala-library</artifactId>
+		    <version>2.12.8</version>
+	    </dependency>
+            <!-- https://mvnrepository.com/artifact/org.scala-lang/scala-reflect -->
+	    <dependency>
+		    <groupId>org.scala-lang</groupId>
+		    <artifactId>scala-reflect</artifactId>
+		    <version>2.12.8</version>
+	    </dependency>
+            <!-- https://mvnrepository.com/artifact/org.scala-lang/scala-compiler -->
+	    <dependency>
+		    <groupId>org.scala-lang</groupId>
+		    <artifactId>scala-compiler</artifactId>
+		    <version>2.12.8</version>
+	    </dependency>
+	    <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-core -->
+	    <dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-core_2.12</artifactId>
+		    <version>3.0.0-preview2</version>
+	    </dependency>
+	    <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
+	    <dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-sql_2.12</artifactId>
+		    <version>3.0.0-preview2</version>
+	    </dependency>
+	    <!-- https://mvnrepository.com/artifact/org.locationtech.geomesa/geomesa-spark-jts -->
+	    <dependency>
+		    <groupId>org.locationtech.geomesa</groupId>
+		    <artifactId>geomesa-spark-jts_2.11</artifactId>
+		    <version>2.1.1</version>
+	    </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+```
