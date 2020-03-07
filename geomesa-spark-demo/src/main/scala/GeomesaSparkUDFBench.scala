@@ -26,7 +26,7 @@ object GeomesaSparkUDFBench {
     for (var i <- 1 to cycleTimes) {
         pointData :+ (i + 0.1, i + 0.1)
     }
-    val pointDf = pointDfData.toDF("x", "y").cache()
+    val pointDf = pointData.toDF("x", "y").cache()
     pointDf.createOrReplaceTempView("pointDf")
     begin = System.nanoTime
     val point = spark.sql("select st_point(x, y) from pointDf")
@@ -34,5 +34,18 @@ object GeomesaSparkUDFBench {
     spark.sql("CACHE table point)
     end = System.nanoTime
     println("geomesa_st_point_time:" + (end - begin) / 1e9d)
+
+    var intersectionData = Seq()
+    for (var i <- 1 to cycleTimes) {
+        intersectionData :+ ("POINT(0 0)", "LINESTRING ( 0 0, 2 2 )")
+    }
+    val intersectionDf = intersectionData.toDF("left", "right").cache()
+    intersectionDf.createOrReplaceTempView("intersectionDf")
+    begin = System.nanoTime
+    val intersection = spark.sql("select st_intersection(left, right) from intersectionDf")
+    intersection.createOrReplaceTempView("intersection")
+    spark.sql("CACHE table intersection)
+    end = System.nanoTime
+    println("geomesa_st_intersection_time:" + (end - begin) / 1e9d)
   }
 }
