@@ -120,7 +120,7 @@ object GeomesaSparkUDFBench {
 
     var crossesData: Seq[(String, String)] = Nil
     for ( index <- 1 to cycleTimes) {
-        crossesData :+ ("MULTIPOINT((1 3), (4 1), (4 3))", "POLYGON((2 2, 5 2, 5 5, 2 5, 2 2))"))
+        crossesData :+ ("MULTIPOINT((1 3), (4 1), (4 3))", "POLYGON((2 2, 5 2, 5 5, 2 5, 2 2))")
     }
     val crossesWkt = crossesData.toDF("leftWkt", "rightWkt").cache()
     crossesWkt.createOrReplaceTempView("crossesWkt")
