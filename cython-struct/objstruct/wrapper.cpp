@@ -627,7 +627,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include "stdexcept"
 #include "typeinfo"
 #include <string>
-#include "/home/ljq/mess/cython-struct/objstruct/func.cpp"
+#include "func.cpp"
 #include "header.h"
 #ifdef _OPENMP
 #include <omp.h>
@@ -1109,12 +1109,10 @@ int __pyx_module_is_main_objstruct__wrapper = 0;
 static PyObject *__pyx_builtin_TypeError;
 static const char __pyx_k_d[] = "d";
 static const char __pyx_k_i[] = "i";
-static const char __pyx_k_obj[] = "obj";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_PyObj[] = "PyObj";
-static const char __pyx_k_pyobj[] = "pyobj";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_setstate[] = "__setstate__";
@@ -1122,25 +1120,17 @@ static const char __pyx_k_TypeError[] = "TypeError";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
-static const char __pyx_k_getDefaultObject[] = "getDefaultObject";
-static const char __pyx_k_objstruct_wrapper[] = "objstruct.wrapper";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
-static const char __pyx_k_objstruct_wrapper_pyx[] = "objstruct/wrapper.pyx";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
 static PyObject *__pyx_n_s_PyObj;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_d;
-static PyObject *__pyx_n_s_getDefaultObject;
 static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
-static PyObject *__pyx_n_s_obj;
-static PyObject *__pyx_n_s_objstruct_wrapper;
-static PyObject *__pyx_kp_s_objstruct_wrapper_pyx;
-static PyObject *__pyx_n_s_pyobj;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
@@ -1150,10 +1140,6 @@ static PyObject *__pyx_n_s_test;
 static int __pyx_pf_9objstruct_7wrapper_5PyObj___cinit__(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self, int __pyx_v_i, double __pyx_v_d); /* proto */
 static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_2getInt(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_4getDouble(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_1i___get__(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self); /* proto */
-static int __pyx_pf_9objstruct_7wrapper_5PyObj_1i_2__set__(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self, PyObject *__pyx_v_i); /* proto */
-static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_1d___get__(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self); /* proto */
-static int __pyx_pf_9objstruct_7wrapper_5PyObj_1d_2__set__(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self, PyObject *__pyx_v_d); /* proto */
 static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_9objstruct_7wrapper_getDefaultObject(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
@@ -1161,8 +1147,6 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_2getObjByParam(CYTHON_UNUSED PyObj
 static PyObject *__pyx_tp_new_9objstruct_7wrapper_PyObj(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
-static PyObject *__pyx_tuple__3;
-static PyObject *__pyx_codeobj__4;
 /* Late includes */
 
 /* "objstruct/wrapper.pyx":10
@@ -1354,7 +1338,7 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_4getDouble(struct __pyx_obj
  *     def getDouble(self):
  *         return self.obj.d             # <<<<<<<<<<<<<<
  * 
- *     @property
+ * def getDefaultObject():
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->obj.d); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
@@ -1378,238 +1362,6 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_4getDouble(struct __pyx_obj
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "objstruct/wrapper.pyx":20
- * 
- *     @property
- *     def i(self):             # <<<<<<<<<<<<<<
- *         return self.obj.i
- *     @i.setter
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_9objstruct_7wrapper_5PyObj_1i_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_9objstruct_7wrapper_5PyObj_1i_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9objstruct_7wrapper_5PyObj_1i___get__(((struct __pyx_obj_9objstruct_7wrapper_PyObj *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_1i___get__(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  __Pyx_RefNannySetupContext("__get__", 0);
-
-  /* "objstruct/wrapper.pyx":21
- *     @property
- *     def i(self):
- *         return self.obj.i             # <<<<<<<<<<<<<<
- *     @i.setter
- *     def i(self, i):
- */
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->obj.i); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 21, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* "objstruct/wrapper.pyx":20
- * 
- *     @property
- *     def i(self):             # <<<<<<<<<<<<<<
- *         return self.obj.i
- *     @i.setter
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("objstruct.wrapper.PyObj.i.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "objstruct/wrapper.pyx":23
- *         return self.obj.i
- *     @i.setter
- *     def i(self, i):             # <<<<<<<<<<<<<<
- *         self.obj.i = i
- * 
- */
-
-/* Python wrapper */
-static int __pyx_pw_9objstruct_7wrapper_5PyObj_1i_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_i); /*proto*/
-static int __pyx_pw_9objstruct_7wrapper_5PyObj_1i_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_i) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9objstruct_7wrapper_5PyObj_1i_2__set__(((struct __pyx_obj_9objstruct_7wrapper_PyObj *)__pyx_v_self), ((PyObject *)__pyx_v_i));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_9objstruct_7wrapper_5PyObj_1i_2__set__(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self, PyObject *__pyx_v_i) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  __Pyx_RefNannySetupContext("__set__", 0);
-
-  /* "objstruct/wrapper.pyx":24
- *     @i.setter
- *     def i(self, i):
- *         self.obj.i = i             # <<<<<<<<<<<<<<
- * 
- *     @property
- */
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_i); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 24, __pyx_L1_error)
-  __pyx_v_self->obj.i = __pyx_t_1;
-
-  /* "objstruct/wrapper.pyx":23
- *         return self.obj.i
- *     @i.setter
- *     def i(self, i):             # <<<<<<<<<<<<<<
- *         self.obj.i = i
- * 
- */
-
-  /* function exit code */
-  __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_AddTraceback("objstruct.wrapper.PyObj.i.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "objstruct/wrapper.pyx":27
- * 
- *     @property
- *     def d(self):             # <<<<<<<<<<<<<<
- *         return self.obj.d
- *     @d.setter
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_9objstruct_7wrapper_5PyObj_1d_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_9objstruct_7wrapper_5PyObj_1d_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9objstruct_7wrapper_5PyObj_1d___get__(((struct __pyx_obj_9objstruct_7wrapper_PyObj *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_1d___get__(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  __Pyx_RefNannySetupContext("__get__", 0);
-
-  /* "objstruct/wrapper.pyx":28
- *     @property
- *     def d(self):
- *         return self.obj.d             # <<<<<<<<<<<<<<
- *     @d.setter
- *     def d(self, d):
- */
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->obj.d); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* "objstruct/wrapper.pyx":27
- * 
- *     @property
- *     def d(self):             # <<<<<<<<<<<<<<
- *         return self.obj.d
- *     @d.setter
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("objstruct.wrapper.PyObj.d.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "objstruct/wrapper.pyx":30
- *         return self.obj.d
- *     @d.setter
- *     def d(self, d):             # <<<<<<<<<<<<<<
- *         self.obj.d = d
- * 
- */
-
-/* Python wrapper */
-static int __pyx_pw_9objstruct_7wrapper_5PyObj_1d_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_d); /*proto*/
-static int __pyx_pw_9objstruct_7wrapper_5PyObj_1d_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_d) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9objstruct_7wrapper_5PyObj_1d_2__set__(((struct __pyx_obj_9objstruct_7wrapper_PyObj *)__pyx_v_self), ((PyObject *)__pyx_v_d));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_9objstruct_7wrapper_5PyObj_1d_2__set__(struct __pyx_obj_9objstruct_7wrapper_PyObj *__pyx_v_self, PyObject *__pyx_v_d) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  double __pyx_t_1;
-  __Pyx_RefNannySetupContext("__set__", 0);
-
-  /* "objstruct/wrapper.pyx":31
- *     @d.setter
- *     def d(self, d):
- *         self.obj.d = d             # <<<<<<<<<<<<<<
- * 
- * def getDefaultObject():
- */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_d); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 31, __pyx_L1_error)
-  __pyx_v_self->obj.d = __pyx_t_1;
-
-  /* "objstruct/wrapper.pyx":30
- *         return self.obj.d
- *     @d.setter
- *     def d(self, d):             # <<<<<<<<<<<<<<
- *         self.obj.d = d
- * 
- */
-
-  /* function exit code */
-  __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_AddTraceback("objstruct.wrapper.PyObj.d.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -1721,17 +1473,16 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_5PyObj_8__setstate_cython__(CYTHON
   return __pyx_r;
 }
 
-/* "objstruct/wrapper.pyx":33
- *         self.obj.d = d
+/* "objstruct/wrapper.pyx":19
+ *         return self.obj.d
  * 
  * def getDefaultObject():             # <<<<<<<<<<<<<<
- *     cdef Obj obj = func.getDefaultObj()
+ *     cdef Obj obj = func.getDefaultObject()
  *     cdef PyObj pyobj = PyObj(obj.i, obj.d)
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_9objstruct_7wrapper_1getDefaultObject(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_9objstruct_7wrapper_1getDefaultObject = {"getDefaultObject", (PyCFunction)__pyx_pw_9objstruct_7wrapper_1getDefaultObject, METH_NOARGS, 0};
 static PyObject *__pyx_pw_9objstruct_7wrapper_1getDefaultObject(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -1753,27 +1504,27 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_getDefaultObject(CYTHON_UNUSED PyO
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("getDefaultObject", 0);
 
-  /* "objstruct/wrapper.pyx":34
+  /* "objstruct/wrapper.pyx":20
  * 
  * def getDefaultObject():
- *     cdef Obj obj = func.getDefaultObj()             # <<<<<<<<<<<<<<
+ *     cdef Obj obj = func.getDefaultObject()             # <<<<<<<<<<<<<<
  *     cdef PyObj pyobj = PyObj(obj.i, obj.d)
  *     return pyobj
  */
-  __pyx_v_obj = getDefaultObj();
+  __pyx_v_obj = getDefaultObject();
 
-  /* "objstruct/wrapper.pyx":35
+  /* "objstruct/wrapper.pyx":21
  * def getDefaultObject():
- *     cdef Obj obj = func.getDefaultObj()
+ *     cdef Obj obj = func.getDefaultObject()
  *     cdef PyObj pyobj = PyObj(obj.i, obj.d)             # <<<<<<<<<<<<<<
  *     return pyobj
  * 
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_obj.i); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 35, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_obj.i); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_obj.d); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 35, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_obj.d); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 35, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
@@ -1781,14 +1532,14 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_getDefaultObject(CYTHON_UNUSED PyO
   PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9objstruct_7wrapper_PyObj), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 35, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9objstruct_7wrapper_PyObj), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_pyobj = ((struct __pyx_obj_9objstruct_7wrapper_PyObj *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "objstruct/wrapper.pyx":36
- *     cdef Obj obj = func.getDefaultObj()
+  /* "objstruct/wrapper.pyx":22
+ *     cdef Obj obj = func.getDefaultObject()
  *     cdef PyObj pyobj = PyObj(obj.i, obj.d)
  *     return pyobj             # <<<<<<<<<<<<<<
  * 
@@ -1799,11 +1550,11 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_getDefaultObject(CYTHON_UNUSED PyO
   __pyx_r = ((PyObject *)__pyx_v_pyobj);
   goto __pyx_L0;
 
-  /* "objstruct/wrapper.pyx":33
- *         self.obj.d = d
+  /* "objstruct/wrapper.pyx":19
+ *         return self.obj.d
  * 
  * def getDefaultObject():             # <<<<<<<<<<<<<<
- *     cdef Obj obj = func.getDefaultObj()
+ *     cdef Obj obj = func.getDefaultObject()
  *     cdef PyObj pyobj = PyObj(obj.i, obj.d)
  */
 
@@ -1821,7 +1572,7 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_getDefaultObject(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "objstruct/wrapper.pyx":38
+/* "objstruct/wrapper.pyx":24
  *     return pyobj
  * 
  * def getObjByParam(i, d):             # <<<<<<<<<<<<<<
@@ -1860,11 +1611,11 @@ static PyObject *__pyx_pw_9objstruct_7wrapper_3getObjByParam(PyObject *__pyx_sel
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_d)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("getObjByParam", 1, 2, 2, 1); __PYX_ERR(1, 38, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("getObjByParam", 1, 2, 2, 1); __PYX_ERR(1, 24, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "getObjByParam") < 0)) __PYX_ERR(1, 38, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "getObjByParam") < 0)) __PYX_ERR(1, 24, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -1877,7 +1628,7 @@ static PyObject *__pyx_pw_9objstruct_7wrapper_3getObjByParam(PyObject *__pyx_sel
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("getObjByParam", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 38, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("getObjByParam", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 24, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("objstruct.wrapper.getObjByParam", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1902,28 +1653,28 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_2getObjByParam(CYTHON_UNUSED PyObj
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("getObjByParam", 0);
 
-  /* "objstruct/wrapper.pyx":39
+  /* "objstruct/wrapper.pyx":25
  * 
  * def getObjByParam(i, d):
  *     cdef Obj obj = func.getObjByParam(i, d)             # <<<<<<<<<<<<<<
  *     cdef PyObj pyobj = PyObj(obj.i, obj.d)
  *     return pyobj
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_i); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 39, __pyx_L1_error)
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_v_d); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 39, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_i); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 25, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_v_d); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 25, __pyx_L1_error)
   __pyx_v_obj = getObjByParam(__pyx_t_1, __pyx_t_2);
 
-  /* "objstruct/wrapper.pyx":40
+  /* "objstruct/wrapper.pyx":26
  * def getObjByParam(i, d):
  *     cdef Obj obj = func.getObjByParam(i, d)
  *     cdef PyObj pyobj = PyObj(obj.i, obj.d)             # <<<<<<<<<<<<<<
  *     return pyobj
  */
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_obj.i); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 40, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_obj.i); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_obj.d); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 40, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_obj.d); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 40, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
@@ -1931,13 +1682,13 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_2getObjByParam(CYTHON_UNUSED PyObj
   PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_4);
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9objstruct_7wrapper_PyObj), __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 40, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9objstruct_7wrapper_PyObj), __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_v_pyobj = ((struct __pyx_obj_9objstruct_7wrapper_PyObj *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "objstruct/wrapper.pyx":41
+  /* "objstruct/wrapper.pyx":27
  *     cdef Obj obj = func.getObjByParam(i, d)
  *     cdef PyObj pyobj = PyObj(obj.i, obj.d)
  *     return pyobj             # <<<<<<<<<<<<<<
@@ -1947,7 +1698,7 @@ static PyObject *__pyx_pf_9objstruct_7wrapper_2getObjByParam(CYTHON_UNUSED PyObj
   __pyx_r = ((PyObject *)__pyx_v_pyobj);
   goto __pyx_L0;
 
-  /* "objstruct/wrapper.pyx":38
+  /* "objstruct/wrapper.pyx":24
  *     return pyobj
  * 
  * def getObjByParam(i, d):             # <<<<<<<<<<<<<<
@@ -1998,46 +1749,12 @@ static void __pyx_tp_dealloc_9objstruct_7wrapper_PyObj(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static PyObject *__pyx_getprop_9objstruct_7wrapper_5PyObj_i(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_9objstruct_7wrapper_5PyObj_1i_1__get__(o);
-}
-
-static int __pyx_setprop_9objstruct_7wrapper_5PyObj_i(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_9objstruct_7wrapper_5PyObj_1i_3__set__(o, v);
-  }
-  else {
-    PyErr_SetString(PyExc_NotImplementedError, "__del__");
-    return -1;
-  }
-}
-
-static PyObject *__pyx_getprop_9objstruct_7wrapper_5PyObj_d(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_9objstruct_7wrapper_5PyObj_1d_1__get__(o);
-}
-
-static int __pyx_setprop_9objstruct_7wrapper_5PyObj_d(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_9objstruct_7wrapper_5PyObj_1d_3__set__(o, v);
-  }
-  else {
-    PyErr_SetString(PyExc_NotImplementedError, "__del__");
-    return -1;
-  }
-}
-
 static PyMethodDef __pyx_methods_9objstruct_7wrapper_PyObj[] = {
   {"getInt", (PyCFunction)__pyx_pw_9objstruct_7wrapper_5PyObj_3getInt, METH_NOARGS, 0},
   {"getDouble", (PyCFunction)__pyx_pw_9objstruct_7wrapper_5PyObj_5getDouble, METH_NOARGS, 0},
   {"__reduce_cython__", (PyCFunction)__pyx_pw_9objstruct_7wrapper_5PyObj_7__reduce_cython__, METH_NOARGS, 0},
   {"__setstate_cython__", (PyCFunction)__pyx_pw_9objstruct_7wrapper_5PyObj_9__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
-};
-
-static struct PyGetSetDef __pyx_getsets_9objstruct_7wrapper_PyObj[] = {
-  {(char *)"i", __pyx_getprop_9objstruct_7wrapper_5PyObj_i, __pyx_setprop_9objstruct_7wrapper_5PyObj_i, (char *)0, 0},
-  {(char *)"d", __pyx_getprop_9objstruct_7wrapper_5PyObj_d, __pyx_setprop_9objstruct_7wrapper_5PyObj_d, (char *)0, 0},
-  {0, 0, 0, 0, 0}
 };
 
 static PyTypeObject __pyx_type_9objstruct_7wrapper_PyObj = {
@@ -2080,7 +1797,7 @@ static PyTypeObject __pyx_type_9objstruct_7wrapper_PyObj = {
   0, /*tp_iternext*/
   __pyx_methods_9objstruct_7wrapper_PyObj, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_9objstruct_7wrapper_PyObj, /*tp_getset*/
+  0, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
@@ -2110,6 +1827,7 @@ static PyTypeObject __pyx_type_9objstruct_7wrapper_PyObj = {
 };
 
 static PyMethodDef __pyx_methods[] = {
+  {"getDefaultObject", (PyCFunction)__pyx_pw_9objstruct_7wrapper_1getDefaultObject, METH_NOARGS, 0},
   {"getObjByParam", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_9objstruct_7wrapper_3getObjByParam, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
@@ -2160,16 +1878,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_d, __pyx_k_d, sizeof(__pyx_k_d), 0, 0, 1, 1},
-  {&__pyx_n_s_getDefaultObject, __pyx_k_getDefaultObject, sizeof(__pyx_k_getDefaultObject), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
   {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
-  {&__pyx_n_s_obj, __pyx_k_obj, sizeof(__pyx_k_obj), 0, 0, 1, 1},
-  {&__pyx_n_s_objstruct_wrapper, __pyx_k_objstruct_wrapper, sizeof(__pyx_k_objstruct_wrapper), 0, 0, 1, 1},
-  {&__pyx_kp_s_objstruct_wrapper_pyx, __pyx_k_objstruct_wrapper_pyx, sizeof(__pyx_k_objstruct_wrapper_pyx), 0, 0, 1, 0},
-  {&__pyx_n_s_pyobj, __pyx_k_pyobj, sizeof(__pyx_k_pyobj), 0, 0, 1, 1},
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
@@ -2207,18 +1920,6 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
-
-  /* "objstruct/wrapper.pyx":33
- *         self.obj.d = d
- * 
- * def getDefaultObject():             # <<<<<<<<<<<<<<
- *     cdef Obj obj = func.getDefaultObj()
- *     cdef PyObj pyobj = PyObj(obj.i, obj.d)
- */
-  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_n_s_obj, __pyx_n_s_pyobj); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(1, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_objstruct_wrapper_pyx, __pyx_n_s_getDefaultObject, 33, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(1, 33, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2506,18 +2207,6 @@ if (!__Pyx_RefNanny) {
   #if defined(__Pyx_Generator_USED) || defined(__Pyx_Coroutine_USED)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #endif
-
-  /* "objstruct/wrapper.pyx":33
- *         self.obj.d = d
- * 
- * def getDefaultObject():             # <<<<<<<<<<<<<<
- *     cdef Obj obj = func.getDefaultObj()
- *     cdef PyObj pyobj = PyObj(obj.i, obj.d)
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9objstruct_7wrapper_1getDefaultObject, NULL, __pyx_n_s_objstruct_wrapper); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_getDefaultObject, __pyx_t_1) < 0) __PYX_ERR(1, 33, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "objstruct/wrapper.pyx":1
  * # distutils: language = c++             # <<<<<<<<<<<<<<

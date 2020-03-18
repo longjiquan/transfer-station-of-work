@@ -1,16 +1,15 @@
 #include <string>
 
-#pragma once
+#ifndef H_HEADER_H
+#define H_HEADER_H
 
 struct Obj {
     int i;
     double d;
-
-    Obj() {
-        i = 0;
-        d = 0;
+    Obj() { 
+        this->i = 0;
+        this->d = 0;
     }
-
     Obj(int i, double d) {
         this->i = i;
         this->d = d;
@@ -18,7 +17,9 @@ struct Obj {
 };
 
 struct Obj
-getDefaultObj();
+getDefaultObject();
 
 struct Obj
 getObjByParam(int i, double d);
+
+#endif  // H_HEADER_H

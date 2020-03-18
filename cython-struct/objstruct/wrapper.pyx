@@ -17,7 +17,7 @@ cdef class PyObj:
         return self.obj.d
 
 def getDefaultObject():
-    cdef Obj obj = func.getDefaultObj()
+    cdef Obj obj = func.getDefaultObject()
     cdef PyObj pyobj = PyObj(obj.i, obj.d)
     return pyobj
 

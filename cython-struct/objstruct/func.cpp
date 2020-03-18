@@ -1,9 +1,8 @@
 #include "header.h"
-#include <stdio.h>
 
 struct Obj
-getDefaultObj(void) {
-    struct Obj obj{0, 0};
+getDefaultObject() { 
+    struct Obj obj;
     return obj;
 }
 
