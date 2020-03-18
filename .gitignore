@@ -1,0 +1,3 @@
+cython-struct/build/
+cython-struct/dist/
+cython-struct/objstruct.egg-info/
